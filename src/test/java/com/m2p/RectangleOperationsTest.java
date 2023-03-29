@@ -3,11 +3,14 @@ package com.m2p;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static com.m2p.RectangleOperations.createSquare;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RectangleOperationsTest{
-    RectangleOperations rectangle = new RectangleOperations();
+
+    RectangleOperations areaOfRectangle = new RectangleOperations(10,10);
+    RectangleOperations areaOfRectangleForNegative = new RectangleOperations(3,-3);
 
     @Nested
     class Area {
@@ -17,7 +20,7 @@ public class RectangleOperationsTest{
             int expectedArea = 100;
 
             //Act
-            int actualArea = rectangle.area(10, 10);
+            int actualArea = areaOfRectangle.getArea();
 
             //Assert
             assertEquals(expectedArea, actualArea);
@@ -25,7 +28,7 @@ public class RectangleOperationsTest{
 
         @Test
         void toReturnExceptionIfLengthOrBreadthIsNegative() {
-            assertThrows(IllegalArgumentException.class, () -> rectangle.area(3, -3));
+            assertThrows(IllegalArgumentException.class, () -> areaOfRectangleForNegative.getArea());
         }
     }
 
@@ -37,7 +40,7 @@ public class RectangleOperationsTest{
             int expectedPerimeter = 40;
 
             //Act
-            int actualPerimeter = rectangle.perimeter(10, 10);
+            int actualPerimeter = areaOfRectangle.getPerimeter();
 
             //Assert
             assertEquals(expectedPerimeter, actualPerimeter);
@@ -45,21 +48,24 @@ public class RectangleOperationsTest{
 
         @Test
         void toReturnExceptionIfLengthOrBreadthIsNegativeInPerimeter() {
-            assertThrows(IllegalArgumentException.class, () -> rectangle.perimeter(10, -3));
+            assertThrows(IllegalArgumentException.class, () -> areaOfRectangleForNegative.getPerimeter());
         }
     }
 
     @Nested
     class Square {
+
+        RectangleOperations square = createSquare(5);
+        RectangleOperations squareSideWithNegativeValue = createSquare(-3);
+
         @Test
         void toReturnAreaOfSquareAsTwentyFiveWhenLengthOfSideIsFive() {
-            RectangleOperations square = new RectangleOperations();
 
             // Arrange
             int expectedArea = 25;
 
             //Act
-            int actualArea = square.areaOfSquare(5);
+            int actualArea = square.getArea();
 
             //Assert
             assertEquals(expectedArea, actualArea);
@@ -67,19 +73,17 @@ public class RectangleOperationsTest{
 
         @Test
         void toReturnExceptionIfGivenSideIsNegative() {
-            RectangleOperations square = new RectangleOperations();
-            assertThrows(IllegalArgumentException.class, () -> square.areaOfSquare(-3));
+            assertThrows(IllegalArgumentException.class, () -> squareSideWithNegativeValue.getArea());
         }
 
         @Test
         void toReturnPerimeterOfSquareAsTwentyWhenLengthOfSideIsFive() {
-            RectangleOperations square = new RectangleOperations();
 
             // Arrange
             int expectedArea = 20;
 
             //Act
-            int actualArea = square.perimeterOfSquare(5);
+            int actualArea = square.getPerimeter();
 
             //Assert
             assertEquals(expectedArea, actualArea);
@@ -87,9 +91,7 @@ public class RectangleOperationsTest{
 
         @Test
         void toReturnExceptionIfGivenSideIsNegativeInPerimeterOfSquare() {
-            RectangleOperations square = new RectangleOperations();
-            assertThrows(IllegalArgumentException.class, () -> square.perimeterOfSquare(-3));
+            assertThrows(IllegalArgumentException.class, () -> squareSideWithNegativeValue.getPerimeter());
         }
     }
-
 }
